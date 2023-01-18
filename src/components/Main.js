@@ -81,7 +81,9 @@ function Main() {
 			`https://assignments.reaktor.com/birdnest/pilots/${drone.serialNumber}`,
 			{
 				'Content-Type': 'application/json',
-				'access-allow-origin': '*',
+				'Access-Control-Allow-Headers': '*',
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Methods': '*',
 			}
 		);
 		const data = await res.json();
@@ -105,14 +107,32 @@ function Main() {
 			localStorage.setItem('drones', JSON.stringify([]));
 		} else {
 			let drones = JSON.parse(localStorage.getItem('drones'));
-			console.log(drones);
+
 			setDronesOwner(drones);
 		}
 	}
+	console.log(violatedUsers);
 
 	return (
 		<div className="main-list">
-			<h2>Drones who violated coords 250k X 250k</h2>
+			<h2>All drones within 500 X 500</h2>
+			<div className="all-violaters">
+				<div className="cat">
+					<span>Model</span>
+					<span>Serial Number</span>
+				</div>
+				{violatedUsers.map((drone) => (
+					<div className="drone">
+						<div className="col1">
+							<span>{drone.model}</span>
+						</div>
+						<div className="col1">
+							<span>{drone.serialNumber}</span>
+						</div>
+					</div>
+				))}
+			</div>
+			<h2>Drones who violated coords 250 X 250</h2>
 			<DroneList drones={dronesOwner} setDronesOwner={setDronesOwner} />
 			<div className="goose">
 				<img src="./goose.png" alt="" />

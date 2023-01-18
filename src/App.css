@@ -98,3 +98,27 @@
 .goose img {
 	width: 100%;
 }
+
+.drone {
+	display: flex;
+}
+
+.cat {
+	background-color: #009879;
+	padding: 8px 15px;
+	font-weight: 500;
+	width: 70%;
+}
+
+.col1 {
+	display: flex;
+}
+
+.all-violaters {
+	max-height: 200px;
+	overflow: scroll;
+}
+
+.all-violaters span {
+	margin-left: 5rem;
+}
