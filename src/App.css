@@ -1,3 +1,100 @@
-body {
-  background: black;
+.main-list {
+	width: 70%;
+	margin: auto;
+	color: white;
+	height: 100vh;
+}
+
+.drone-container {
+	overflow: scroll;
+
+	width: 50vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 4rem;
+}
+
+.drone-div {
+	background: rgb(26, 26, 25);
+	padding: 2rem;
+	margin: 2rem;
+}
+
+.styled-table {
+	border-collapse: collapse;
+	margin: 25px 0;
+	font-size: 0.9em;
+	font-family: sans-serif;
+	min-width: 450px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+	background-color: #009879;
+	color: #ffffff;
+	display: flex;
+	justify-content: space-between;
+	min-width: 100%;
+	text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+	padding: 12px 15px;
+	width: 100%;
+}
+
+.styled-table tbody tr {
+	border-bottom: 1px solid #dddddd;
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.styled-table tbody tr td {
+	width: 100%;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+	background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+	border-bottom: 2px solid #009879;
+}
+
+::-webkit-scrollbar {
+	width: 20px;
+}
+
+::-webkit-scrollbar-track {
+	background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #70adc4;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #4d798a;
+	border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #5893a8;
+	border-radius: 20px;
+	border: 6px solid transparent;
+	background-clip: content-box;
+}
+
+.goose {
+	position: absolute;
+	bottom: 0rem;
+	width: 25%;
+	right: 0rem;
+}
+
+.goose img {
+	width: 100%;
 }

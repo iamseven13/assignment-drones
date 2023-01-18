@@ -5,13 +5,14 @@ function Main() {
 	const [data, setData] = useState();
 	const [violatedUsers, setViolatedUsers] = useState([]);
 	const [isFetched, setIsFetched] = useState(false);
+	const [dronesOwner, setDronesOwner] = useState([]);
 
 	// Get the latest snapshot -> once every 2 seconds
 	useEffect(() => {
 		const interval = setInterval(() => {
 			setIsFetched((prev) => !prev);
 		}, 3000);
-
+		getLocalDrones();
 		return () => clearInterval(interval);
 	}, []);
 
@@ -31,10 +32,8 @@ function Main() {
 			const {
 				capture: { drone },
 			} = data?.report;
-			console.log(drone);
 
 			setData(drone);
-			console.log(data);
 
 			// Get droners who violated the zone
 			const restrictedPositionX = 250000;
@@ -62,12 +61,11 @@ function Main() {
 			userPositionX <= restrictedPositionX ||
 			userPositionY <= restrictedPositionY
 		) {
-			// If drone already exit in violatedUsers, dont add it again.
+			// If drone already exists in violatedUsers, dont add it again.
 			const isDroneBlacklisted = violatedUsers.find(
-				(blackListedDrone) =>
-					blackListedDrone.serialNumber === drone.serialNumber
+				({ serialNumber }) => serialNumber === drone.serialNumber
 			);
-
+			console.log(isDroneBlacklisted);
 			// If drone doenst exit in violatedUsers, add it.
 			if (isDroneBlacklisted === undefined) {
 				setViolatedUsers((prev) => [...prev, drone]);
@@ -79,25 +77,47 @@ function Main() {
 	}
 
 	async function findDroneInfo(drone) {
-		let config = {
-			headers: {
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': '*',
-			},
-		};
 		const res = await fetch(
 			`https://assignments.reaktor.com/birdnest/pilots/${drone.serialNumber}`,
-
-			config
+			{
+				'Content-Type': 'application/json',
+				'access-allow-origin': '*',
+			}
 		);
 		const data = await res.json();
-		console.log(data);
+
+		const droneOwner = {
+			serialNumber: drone.serialNumber,
+			...data,
+			drone,
+		};
+
+		setDronesOwner((prev) => [...prev, droneOwner]);
+		saveLocalDrones();
+	}
+
+	function saveLocalDrones() {
+		localStorage.setItem('drones', JSON.stringify(dronesOwner));
+	}
+
+	function getLocalDrones() {
+		if (localStorage.getItem('drones') === null) {
+			localStorage.setItem('drones', JSON.stringify([]));
+		} else {
+			let drones = JSON.parse(localStorage.getItem('drones'));
+			console.log(drones);
+			setDronesOwner(drones);
+		}
 	}
 
 	return (
-		<>
-			<DroneList drones={violatedUsers} />
-		</>
+		<div className="main-list">
+			<h2>Drones who violated coords 250k X 250k</h2>
+			<DroneList drones={dronesOwner} setDronesOwner={setDronesOwner} />
+			<div className="goose">
+				<img src="./goose.png" alt="" />
+			</div>
+		</div>
 	);
 }
 
