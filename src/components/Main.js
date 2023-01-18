@@ -45,7 +45,9 @@ function Main() {
 				}
 			}
 		}
+
 		fetchData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isFetched]);
 
 	// Function to iterate through the retrieved api data and find drones who violated the parameter
