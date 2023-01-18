@@ -34,6 +34,7 @@ function Main() {
 			console.log(drone);
 
 			setData(drone);
+			console.log(data);
 
 			// Get droners who violated the zone
 			const restrictedPositionX = 250000;
